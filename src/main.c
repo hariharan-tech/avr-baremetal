@@ -1,27 +1,30 @@
 #include "./../inc/atmega328p/memorymap.h" // Register Memory map file
 #include "./../inc/lib/lcd16x2/lcd16x2.h" // Functions for accessing LCD displays
 
-// #include <avr/io.h> // Exposes GPIO functions and registers
-// #include <util/delay.h> // Exposes the delay function
-
-#define RS_BIT 0
-#define RW_BIT 1
-#define ENBL 2
+#define RS_BIT 0 // Define the Register Select bit location in PortB
+#define RW_BIT 1 // Define the Read Write bit location in PortB 
+#define ENBL 2 // Define the Enable bit location in PortB
 
 int main(){
-	lcd16x2_8data(.data_port(PORTD),
-				.control_port(PORTC),
-				.rs_bit(RS_BIT),
-				.rw_bit(RW_BIT),
-				.enable_bit(ENBL)
-				);
-	clear_display();
-	// DDRB |= (1<<5); // Making PORTB 5th bit as an output bit
-	// while(1){ // Infinite loop
-	// 	PORTB |= (1<<5); // Setting the 5th bit of Port B
-	// 	_delay_ms(100); // 1000 ms delay
-	// 	PORTB &= ~(1<<5); // Clearing the 5th Bit of Port B
-	// 	_delay_ms(100); // 1000 ms delay
-	// }
+	DDRD = 0xff; DDRB = 0xff; // PORTD and PORTB as output ports
+	PORTD = 0; PORTB = 0; // Initialize both to logic level 0
+	
+	// Create a object of the struct
+	// We pass in address of PORTD and PORTB and not the value in PORTD or PORTB
+	lcd16x2_8data LCD_Display = {&PORTD,&PORTB,RS_BIT,RW_BIT,ENBL};
+	
+	// As per datasheet we need to wait for 40ms until the voltage level stabilizes
+	_delay_ms(40);
+
+	// Call the initialize display function by passing the address of LCD_Display struct
+	init_display(&LCD_Display);
+	
+	// An example text for displaying
+	unsigned char name[] = {"AVR Baremetal!"};
+	
+	// We call this function as per the legnth of the array and display it
+	for(int i=0;name[i]!='\0';i++)
+		data_write(&LCD_Display,name[i]); // We pass in the struct and data we wish to print
+	blinky_onboard_led(); // Infinite loop while blinking the onboard LED
 	return 0;
 }
