@@ -678,23 +678,25 @@ blockquote {
 # export PATH=$PATH:~/avr8-gnu-toolchain-linux_x86_64/bin</code></pre></li></ul><ul id="dd716a04-7de5-4071-a474-c235c852076c" class="bulleted-list"><li style="list-style-type:circle">Save the file and exit. Now run <code>source .bashrc</code>to reload the path settings. </li></ul><ul id="aceaf781-0584-42d3-af94-73a3a565985a" class="bulleted-list"><li style="list-style-type:circle">Type in <code>avr-gcc --version</code> in the terminal and now you should see the version details.<figure id="643721ab-9537-4a15-b234-ab83968fbed8" class="image"><a href="Requirements%20and%20Environment%20setup%2044581c5faa5c472e8831fe50c34e3165/Untitled.png"><img style="width:861px" src="Requirements%20and%20Environment%20setup%2044581c5faa5c472e8831fe50c34e3165/Untitled.png"/></a></figure></li></ul></li></ul><ul id="8ea2cf58-ded4-4f6d-8987-70f956232f27" class="bulleted-list"><li style="list-style-type:disc"><code>avr-objcopy</code> would be present in the toolchain, so we now don’t need to worry about its installation.</li></ul><h3 id="7a1c237d-69b3-4754-8be2-ac107f79f666" class=""><code>avrdude</code></h3><ul id="71302323-fe02-44e1-83e0-15aa5cbed4f6" class="bulleted-list"><li style="list-style-type:disc">This is an open-source programmer for AVR based micro-controllers.</li></ul><ul id="40d10e3f-a941-4492-aa7c-52755c9e9f06" class="bulleted-list"><li style="list-style-type:disc">Can be installed from package manager using the line<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="5638b881-6608-4403-8400-92c22f8539b3" class="code"><code class="language-Bash">sudo apt-get install avrdude</code></pre></li></ul><ul id="6aac8c70-05b0-4284-a338-a925d796a5d0" class="bulleted-list"><li style="list-style-type:disc">Typing in <code>avrdude --version</code> should give you the version results implying that the install was right!</li></ul><h3 id="108aa06e-ed23-4268-bad1-40b196f8ea66" class=""><code>make</code></h3><ul id="be77000e-3d70-465a-9df2-bc765e579303" class="bulleted-list"><li style="list-style-type:disc">make is used as the build automation tool for generation of object, elf and hex files.</li></ul><ul id="73b8b34a-a892-4f46-b207-1f3f16a86f59" class="bulleted-list"><li style="list-style-type:disc"><code>avrdude</code> is also mentioned in the Makefile to flash the chips (needs fix, currently works only for arduino based programmer and <code>/dev/ttyACM0</code> port of USB.</li></ul><p id="67bdac6f-bf1e-4c02-ab8c-fb8b6c225de2" class="">Now, you can get started with the Bare-metal programming for AVR Microcontrollers!</p><p id="fcce227f-de5d-4821-b18f-3f5243d2b6fe" class="">
 </p><h2 id="2be4e2a2-a55a-456e-842c-2f7939a4f583" class="">Project directory tree</h2><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="92596a2b-6ebd-4dbe-9df7-6259867c093e" class="code"><code class="language-Bash">.
 ├── build
-│   ├── main.elf
-│   ├── main.hex
-│   ├── main.o
-│   └── obj
-│       ├── delay.o
-│       ├── lcd16x2.o
-│       └── memorymap.o
+│   ├── main.elf
+│   ├── main.hex
+│   ├── main.o
+│   └── obj
+│       ├── delay.o
+│       ├── lcd16x2.o
+│       └── memorymap.o
+├── examples
+│   └── blinky.c
 ├── inc
-│   ├── atmega328p
-│   │   ├── delay.c
-│   │   ├── delay.h
-│   │   ├── memorymap.c
-│   │   └── memorymap.h
-│   └── lib
-│       └── lcd16x2
-│           ├── lcd16x2.c
-│           └── lcd16x2.h
+│   ├── atmega328p
+│   │   ├── delay.c
+│   │   ├── delay.h
+│   │   ├── memorymap.c
+│   │   └── memorymap.h
+│   └── lib
+│       └── lcd16x2
+│           ├── lcd16x2.c
+│           └── lcd16x2.h
 ├── Makefile
 └── src
-    └── main.c</code></pre><ul id="1d55480b-226a-4393-8bee-9b76fcb11979" class="bulleted-list"><li style="list-style-type:disc">The user code goes in <code>main.c</code>.</li></ul><ul id="96be6c35-f880-4bfe-9a59-54cd2648e4d5" class="bulleted-list"><li style="list-style-type:disc">The micro-controller’s memory map and other relevant files, user defined functions for libraries (under <code>/inc/lib</code>) and header files go under <code>./inc/</code> folder.</li></ul><ul id="38bc481b-683c-4e71-ae6f-3bfc0192f15e" class="bulleted-list"><li style="list-style-type:disc">The intermediary object files are compiled to <code>/build/obj/</code> and the final <code>main.hex</code> file is present in the <code>/build</code> directory.</li></ul><ul id="73e56375-3fa3-42e3-9af6-018e31151e93" class="bulleted-list"><li style="list-style-type:disc">Running make commands, will create the necessary <code>elf</code>, <code>hex</code> and <code>.o</code> files.</li></ul></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>
+    └── main.c</code></pre><ul id="1d55480b-226a-4393-8bee-9b76fcb11979" class="bulleted-list"><li style="list-style-type:disc">The user code goes in <code>main.c</code>.</li></ul><ul id="96be6c35-f880-4bfe-9a59-54cd2648e4d5" class="bulleted-list"><li style="list-style-type:disc">The micro-controller’s memory map and other relevant files, user defined functions for libraries (under <code>/inc/lib</code>) and header files for the microcontroller such as memory map file go under <code>./inc/&lt;mcu_name&gt;</code> folder.</li></ul><ul id="38bc481b-683c-4e71-ae6f-3bfc0192f15e" class="bulleted-list"><li style="list-style-type:disc">The intermediary object files are compiled to <code>/build/obj/</code> and the final <code>main.hex</code> file is present in the <code>/build</code> directory.</li></ul><ul id="73e56375-3fa3-42e3-9af6-018e31151e93" class="bulleted-list"><li style="list-style-type:disc">Running make commands, will create the necessary <code>elf</code>, <code>hex</code> and <code>.o</code> files.</li></ul><ul id="709e0f2b-ce59-4a0b-b416-41e3201893bb" class="bulleted-list"><li style="list-style-type:disc">The <code>examples</code> directory would contain all the example codes that can be pasted in the <code>main.c</code> file to observe the outputs.</li></ul></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>
